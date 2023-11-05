@@ -1,15 +1,8 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-
-fn fibonacci(n: u64) -> u64 {
-    match n {
-        0 => 1,
-        1 => 1,
-        n => fibonacci(n-1) + fibonacci(n-2),
-    }
-}
+use queue_sync::std_mpsc;
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("fib 20", |b| b.iter(|| fibonacci(black_box(20))));
+    c.bench_function("std_mpsc", |b| b.iter(|| std_mpsc(black_box(100_000))));
 }
 
 criterion_group!(benches, criterion_benchmark);
